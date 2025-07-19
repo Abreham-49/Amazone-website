@@ -11,6 +11,8 @@ function CarouselEffect() {
         infiniteLoop={true}
         showThumbs={false}
         showIndicators={false}
+        showStatus={false}
+
     >
      {
         img.map((imageitemlink)=>{
