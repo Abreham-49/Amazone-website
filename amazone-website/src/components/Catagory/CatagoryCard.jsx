@@ -14,7 +14,7 @@ function CatagoryCard() {
           <img src={item.imgLink}alt="" />
           <p>shop now</p>
         </a>
-      </div>))};
+      </div>))}
     </div>
   );
 }

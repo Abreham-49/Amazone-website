@@ -39,12 +39,12 @@
 }
 @media (max-width: 1024px) {
     .catagory_container {
-        grid-template-columns: repeat(3,1fr);
+        grid-template-columns: repeat(4,1fr);
     }
     .catagories {
         margin-bottom: 10px;
-        width: 250px;
-        margin-top: 0%;
+        width: 170px;
+        margin-top: -20%;
     }
 }
 @media (max-width: 768px) {
