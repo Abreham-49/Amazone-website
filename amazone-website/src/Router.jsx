@@ -7,6 +7,7 @@ import Orders from "./pages/Orders/Orders"
 import Cart from "./pages/Cart/Cart"
 import Page404 from "./pages/Pa404/Page404";
 import Results from "./pages/Results/Results"
+import ProductDetail from "./pages/ProductDetail/ProductDetail";
 function Routing() {
   return (
     <Router>
@@ -18,6 +19,7 @@ function Routing() {
         <Route path="/cart" element={<Cart />} />
         <Route path="*" element={<Page404 />} />
         <Route path="/catagory/:categoryName" element={<Results />}/>
+        <Route path="/products/:productid" element={<ProductDetail />} />
       </Routes>
     </Router>
   );
