@@ -48,3 +48,33 @@
 .product_container section{
     margin: 0 auto;
 }
+.product_fixed {
+    display: flex;
+    box-shadow: none;
+    width: 100%;
+    height: auto;
+    gap: 50px;
+}
+.product_fixed h3{
+    padding: 20px 0px;
+} 
+.product_fixed .button {
+    display: block;
+    position: static;
+    width: 150px;
+    margin-right: 40px;
+}
+.product_fixed {
+    height: 50vh;
+}
+.product_fixed img {
+    width: 300px !important;
+    height: auto;
+}
+
+@media screen and (max-width:768px){
+    .product_fixed {
+        display: flex;
+        flex-direction: column;
+    }
+}
