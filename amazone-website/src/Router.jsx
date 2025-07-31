@@ -20,6 +20,7 @@ function Routing() {
         <Route path="*" element={<Page404 />} />
         <Route path="/catagory/:categoryName" element={<Results />}/>
         <Route path="/products/:productid" element={<ProductDetail />} />
+        <Route path="/payment" element={<Payment />} />
       </Routes>
     </Router>
   );

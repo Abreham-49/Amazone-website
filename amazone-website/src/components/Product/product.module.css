@@ -64,9 +64,6 @@
     width: 150px;
     margin-right: 40px;
 }
-.product_fixed {
-    height: 50vh;
-}
 .product_fixed img {
     width: 300px !important;
     height: auto;
