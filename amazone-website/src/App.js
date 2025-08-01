@@ -1,11 +1,34 @@
-import './App.css';
-import Landing from './pages/Landing/Landing';
-import Router from "./Router"
+import { useContext, useEffect } from "react";
+import "./App.css";
+import Landing from "./pages/Landing/Landing";
+import Router from "./Router";
+import { Datacontext } from "./components/DataProvider/DataProvider";
+import { auth } from "./Utility/firebase";
+import { Type } from "./Utility/Action.type";
 
 function App() {
+  const [{ user ,basket}, dispatch] = useContext(Datacontext);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        dispatch(
+          { 
+            type: Type.SET_USER, 
+            user: authUser 
+          });
+      }else {
+        dispatch({
+          type: Type.SET_USER,
+          user: null,
+        });
+      }
+    });
+  },[]);
+
   return (
     <>
-   <Router />
+      <Router />
     </>
   );
 }

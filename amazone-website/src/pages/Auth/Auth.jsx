@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import classes from "./auth.module.css";
-import { Link } from "react-router-dom";
-import {auth} from "../../Utility/firebase"
+import { Link, useNavigate } from "react-router-dom";
+import { auth } from "../../Utility/firebase";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -9,40 +9,51 @@ import {
 import { useContext } from "react";
 import { Datacontext } from "../../components/DataProvider/DataProvider";
 import { Type } from "../../Utility/Action.type";
+import { ClipLoader } from "react-spinners";
 function Auth() {
-  const [email,setEmail]=useState("");
-  const [password,setPassword]=useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
-const [{ user }, dispatch] = useContext(Datacontext);
- console.log(user)
-  const authhandler=async(e)=>{
+  const [loading, setLoading] = useState({ signup: false, signIn: false });
+  const [{ user }, dispatch] = useContext(Datacontext);
+  const navigate = useNavigate();
+  console.log(user);
+  const authhandler = async (e) => {
     e.preventDefault();
-    console.log(e.target.name)
-    if(e.target.name=="signin"){
-      signInWithEmailAndPassword(auth,email,password).then((userInfo)=>{
-       dispatch({
-        type:Type.SET_USER,
-        user:userInfo.user
-       })
-      }).catch((err)=>{
-        console.log(err)
-      })
-    }else {
-      createUserWithEmailAndPassword(auth, email, password)
+    console.log(e.target.name);
+    if (e.target.name == "signin") {
+      setLoading({ signIn: true });
+      signInWithEmailAndPassword(auth, email, password)
         .then((userInfo) => {
-        dispatch({
-          type: Type.SET_USER,
-          user: userInfo.user,
-        });
+          dispatch({
+            type: Type.SET_USER,
+            user: userInfo.user,
+          });
+          setLoading({ signIn: false });
+          navigate("/");
         })
         .catch((err) => {
-          console.log(err);
+          setError(err.message);
+          setLoading({ ...loading, signIn: false });
+        });
+    } else {
+      setLoading({ signup: true });
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userInfo) => {
+          dispatch({
+            type: Type.SET_USER,
+            user: userInfo.user,
+          });
+          setLoading({ signup: false });
+          navigate("/");
+        })
+        .catch((err) => {
+          setError(err.message);
+          setLoading({ ...loading, signup: false });
         });
     }
-  }
+  };
 
-  
   return (
     <section className={classes.login}>
       <Link to="/">
@@ -72,13 +83,16 @@ const [{ user }, dispatch] = useContext(Datacontext);
               id="password"
             />
           </div>
+          <div>
+            {error && <small className={classes.errors}>{error}</small>}
+          </div>
           <button
             type="submit"
             name="signin"
             onClick={authhandler}
             className={classes.login_signin}
           >
-            Sign in
+            {loading.signIn ? <ClipLoader size={15} color="#000" /> : "Sign-in"}
           </button>
         </form>
         {/* aggrement */}
@@ -88,12 +102,16 @@ const [{ user }, dispatch] = useContext(Datacontext);
           Interest-Based Ads Notice.
         </p>
         <button
-        name="signup"
+          name="signup"
           type="submit"
           onClick={authhandler}
           className={classes.login_register}
         >
-          Create your Amazone Account
+          {loading.signup ? (
+            <ClipLoader size={15} color="#000" />
+          ) : (
+            "Create your Amazone Account"
+          )}
         </button>
       </div>
     </section>
